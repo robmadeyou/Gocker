@@ -1,8 +1,8 @@
 #!/bin/sh
-# GCD Docker helper
+# Docker helper
 # Appropriately named Gocker.
 #
-# A very small litte script that I ( Roger ) wrote up because
+# A very small litte script that I wrote up because
 # writing the docker commands constantly kept getting annoying.
 #
 # Either place the script in /bin/ or root directory of the project.
