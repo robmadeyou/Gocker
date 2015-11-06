@@ -23,11 +23,13 @@ function main {
         up "${@:2}";
     elif [[ "$1" == "halt" ]] || [[ "$1" == "down" ]]; then
         down "${@:2}";
+    elif [[ "$1" == "nuke" ]]; then
+        nuke "${@:2}";
     elif [[ "$1" == "ssh" ]] || [[ "$1" == "shell" ]] || [[ "$1" == "bash" ]]; then
         execute "-it" "${@:2}" "/bin/bash";
     elif [ "$1" == "run" ]; then
         execute "${@:2}";
-    elif [ "$1" == "status" ]; then
+    elif [[ "$1" == "status" ]] || [[ "$1" == "stats" ]] || [[ "$1" == "ps" ]]; then
         status;
     elif [[ "$1" == "throw" ]] || [[ "$1" == "throwaway" ]] || [[ "$1" == "th" ]]; then
         throwaway "${@:2}";
@@ -53,10 +55,21 @@ function printHelp {
     echo "I'm helping!";
 }
 
+function nuke {
+    if [ "$1" == "both" ]; then
+        docker rm -f $(docker ps -aq);
+        docker rmi -f $(docker images -aq);
+    elif [ "$1" == "images" ]; then
+        docker rmi -f $(docker images -aq);
+    else
+        docker rm -f $(docker ps -aq);
+    fi
+}
+
 function status {
 up=`docker ps -q | wc -l`;
 total=`docker ps -aq | wc -l`;
-    docker ps;
+    docker ps $@;
     if [ $up -ne $total ]; then
         echo "$up/$total containers are running."
         echo "Would you like to [S]tart the non-running ones, [R]emove them, or [I]gnore this?";
