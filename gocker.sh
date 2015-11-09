@@ -56,7 +56,7 @@ function printHelp {
 }
 
 function nuke {
-    if [ "$1" == "both" ]; then
+    if [[ "$1" == "both" ]] || [[ "$1" == "all" ]]; then
         docker rm -f $(docker ps -aq);
         docker rmi -f $(docker images -aq);
     elif [ "$1" == "images" ]; then
