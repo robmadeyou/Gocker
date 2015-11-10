@@ -1,6 +1,6 @@
 #!/bin/sh
 # Docker helper
-# Appropriately named Gocker.
+# Appropriately named Rocker.
 #
 # A very small litte script that I wrote up because
 # writing the docker commands constantly kept getting annoying.
