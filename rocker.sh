@@ -33,6 +33,8 @@ function main {
         status;
     elif [[ "$1" == "throw" ]] || [[ "$1" == "throwaway" ]] || [[ "$1" == "th" ]]; then
         throwaway "${@:2}";
+    elif [[ "$1" == "monitor" ]] || [[ "$1" == "watch" ]]; then
+        monitor "${@:2}";
     else
         echo "Not a valid command, refer to the help menu:";
         printHelp;
@@ -93,6 +95,10 @@ function throwaway {
         echo 'This function needs a command to run';
     fi
     docker run --rm -it ubuntu $1
+}
+
+function monitor {
+    watch -n 0.4 "docker logs $1 | tail -n 30"
 }
 
 main "$@";
