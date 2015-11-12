@@ -35,6 +35,8 @@ function main {
         throwaway "${@:2}";
     elif [[ "$1" == "monitor" ]] || [[ "$1" == "watch" ]]; then
         monitor "${@:2}";
+    elif [[ "$1" == "restart" ]] || [[ "$1" == "bounce" ]]; then
+        bounce "${@:2}";
     else
         echo "Not a valid command, refer to the help menu:";
         printHelp;
@@ -99,6 +101,13 @@ function throwaway {
 
 function monitor {
     watch -n 0.4 "docker logs $1 | tail -n 30"
+}
+
+function bounce {
+    echo "Stopping"
+    docker stop $@;
+    echo "Starting"
+    docker start $@;
 }
 
 main "$@";
