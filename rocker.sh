@@ -23,6 +23,8 @@ function main {
         up "${@:2}";
     elif [[ "$1" == "halt" ]] || [[ "$1" == "down" ]]; then
         down "${@:2}";
+    elif [[ "$1" == "r" ]] || [[ "$1" == "remove" ]]; then
+        remove "${@:2}";
     elif [[ "$1" == "nuke" ]]; then
         nuke "${@:2}";
     elif [[ "$1" == "ssh" ]] || [[ "$1" == "shell" ]] || [[ "$1" == "bash" ]]; then
@@ -108,6 +110,10 @@ function bounce {
     docker stop $@;
     echo "Starting"
     docker start $@;
+}
+
+function remove {
+    docker rm -f $@;
 }
 
 main "$@";
