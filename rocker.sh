@@ -39,6 +39,8 @@ function main {
         monitor "${@:2}";
     elif [[ "$1" == "restart" ]] || [[ "$1" == "bounce" ]]; then
         bounce "${@:2}";
+    elif [[ "$1" == "check" ]]; then
+        check "${@:2}";
     else
         echo "Not a valid command, refer to the help menu:";
         printHelp;
@@ -114,6 +116,15 @@ function bounce {
 
 function remove {
     docker rm -f $@;
+}
+
+function check {
+status=$(docker ps --filter="name=$1" --format="{{.Status}}")
+    if [ "$status" == "" ]; then
+        echo "Down";
+    else
+        echo $status;
+    fi
 }
 
 main "$@";
